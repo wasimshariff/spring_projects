@@ -1,0 +1,32 @@
+buildscript {
+	repositories {
+		maven {
+			url "${pmnexus}"
+			credentials {
+				username = "${mavenUser}"
+				password = "${mavenPassword}"
+			}
+		}
+	}
+	dependencies {
+		classpath("com.pm:pm-spring-gradle-plugin:1.+")
+	}
+}
+
+apply plugin: 'pmic-jar'
+
+bootJar {
+	baseName = 'resubmit-eapps'
+	version =  "${version}"
+}
+
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-batch'
+	implementation group: 'com.ibm.db2', name: 'db2jcc4', version: '4.23+'
+	implementation group: 'com.ibm.db2', name: 'db2jcc_license_cisuz', version: '3.67+'
+	implementation group: 'com.h2database', name: 'h2', version: '1.4.+'
+	implementation group: 'org.hsqldb', name: 'hsqldb', version: '2.4.+'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.batch:spring-batch-test'
+}
